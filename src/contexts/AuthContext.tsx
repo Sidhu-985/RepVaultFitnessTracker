@@ -58,21 +58,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await signInWithEmailAndPassword(auth, email, password);
   };
 
-  const signUp = async (email: string, password: string, displayName: string) => {
+  const signUp = async (
+  email: string,
+  password: string,
+  displayName: string,
+  clientType: string,
+  age?: number,
+  gender?: string,
+  height?: number,
+  weight?: number
+) => {
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   const user = userCredential.user;
 
-  await Promise.all([
-    updateProfile(user, { displayName }),
-    setDoc(doc(db, 'users', user.uid), {
-      id: user.uid,
-      email: user.email!,
-      displayName,
-      createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now(),
-    }),
-  ]);
+  await updateProfile(user, { displayName });
+
+  await setDoc(doc(db, "users", user.uid), {
+    id: user.uid,
+    email: user.email!,
+    displayName,
+    clientType,      // 🔥 required for predefined workouts
+    age: age ?? null,
+    gender: gender ?? null,
+    height: height ?? null,
+    weight: weight ?? null,
+    goalIds: [],     // 🔥 safe for goals
+    activeWorkoutTemplateId: null,
+    createdAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+  });
 };
+
 
 
   const signOut = async () => {

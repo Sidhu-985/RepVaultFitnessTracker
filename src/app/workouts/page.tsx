@@ -19,6 +19,7 @@ import {
   addDoc,
   updateDoc,
   arrayUnion,
+  Timestamp,
 } from "firebase/firestore";
 import { Workout } from "@/types";
 import { format } from "date-fns";
@@ -53,33 +54,87 @@ function WorkoutsContent() {
   const [recommendedPlans, setRecommendedPlans] = useState<any[]>([]);
 
   useEffect(() => {
-    if (user) {
+    if (user && userData) {
       fetchWorkouts();
       fetchRecommendedPlans();
     }
-  }, [user]);
+  }, [user, userData]);
 
   const fetchWorkouts = async () => {
-    if (!user) return;
-    try {
-      const workoutsQuery = query(
-        collection(db, "workouts"),
-        where("userId", "==", user.uid),
-        orderBy("date", "desc")
-      );
-      const workoutsSnapshot = await getDocs(workoutsQuery);
-      const workoutsData = workoutsSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Workout[];
-      setWorkouts(workoutsData);
-    } catch (error) {
-      console.error("Error fetching workouts:", error);
-      toast.error("Failed to load workouts");
-    } finally {
-      setLoading(false);
+  if (!user) return;
+
+  setLoading(true);
+
+  try {
+    const workoutsQuery = query(
+      collection(db, "workouts"),
+      where("userId", "==", user.uid)
+      // ❌ removed orderBy("date") because it crashes on bad data
+    );
+
+    const workoutsSnapshot = await getDocs(workoutsQuery);
+
+    const cleanedWorkouts: Workout[] = [];
+
+    for (const docSnap of workoutsSnapshot.docs) {
+      const data = docSnap.data();
+      let updated = false;
+
+      // 1️⃣ If date is missing → auto-fix
+      if (!data.date) {
+        data.date = Timestamp.now();
+        updated = true;
+      }
+
+      // 2️⃣ If date is a string → convert to Timestamp
+      if (typeof data.date === "string") {
+        const parsed = new Date(data.date);
+        if (!isNaN(parsed.getTime())) {
+          data.date = Timestamp.fromDate(parsed);
+          updated = true;
+        } else {
+          // fallback
+          data.date = Timestamp.now();
+          updated = true;
+        }
+      }
+
+      // 3️⃣ If date is a JS Date object → convert to Timestamp
+      if (data.date instanceof Date) {
+        data.date = Timestamp.fromDate(data.date);
+        updated = true;
+      }
+
+      // 4️⃣ Persist fixes back to Firestore
+      if (updated) {
+        await updateDoc(doc(db, "workouts", docSnap.id), {
+          date: data.date,
+        });
+      }
+
+      cleanedWorkouts.push({
+        id: docSnap.id,
+        ...data,
+      } as Workout);
     }
-  };
+
+    // 5️⃣ Sort safely in frontend (no Firestore ordering needed)
+    cleanedWorkouts.sort((a, b) => {
+      const da = a.date?.toDate ? a.date.toDate() : new Date();
+      const db = b.date?.toDate ? b.date.toDate() : new Date();
+      return db.getTime() - da.getTime();
+    });
+
+    setWorkouts(cleanedWorkouts);
+
+  } catch (error) {
+    console.error("Error fetching workouts:", error);
+    toast.error("Failed to load workouts");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   // ✅ Fetch predefined workout templates (with full debug + fallback UI)
   const fetchRecommendedPlans = async () => {
@@ -92,10 +147,7 @@ function WorkoutsContent() {
       const q = query(
         collection(db, "predefinedWorkouts"),
         where("targetClientType", "in", [
-          userData.clientType,
-          "StrengthTraining",
-          "General",
-          "FatLoss",
+          userData.clientType
         ])
       );
 
@@ -135,7 +187,7 @@ function WorkoutsContent() {
         intensity: plan.difficulty?.toLowerCase() || "moderate",
         duration: (plan.exercises?.length || 0) * 10,
         calories: (plan.exercises?.length || 0) * 50,
-        date: new Date(),
+        date: Timestamp.now(),
         notes: "Started predefined plan",
       };
 
@@ -333,7 +385,13 @@ function WorkoutList({ workouts, getIntensityColor, handleDeleteWorkout }: any) 
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <span className="flex items-center gap-1">
                 <Calendar className="h-4 w-4" />
-                {workout.date && format(workout.date.toDate(), "MMM dd, yyyy")}
+                {
+  workout.date &&
+    (workout.date.toDate
+      ? format(workout.date.toDate(), "MMM dd, yyyy")
+      : format(new Date(workout.date), "MMM dd, yyyy"))
+}
+
               </span>
               <span className="flex items-center gap-1">
                 <Clock className="h-4 w-4" />
