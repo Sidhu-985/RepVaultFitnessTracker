@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Plus, Target, TrendingUp, Calendar, Trash2, Bell } from 'lucide-react';
 import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, orderBy, deleteDoc, doc } from 'firebase/firestore';
+import { collection, query, where, getDocs, orderBy, deleteDoc, doc,Timestamp } from 'firebase/firestore';
 import { Goal } from '@/types';
 import { format } from 'date-fns';
 import Link from 'next/link';
@@ -57,7 +57,6 @@ function GoalsContent() {
       const goalsQuery = query(
         collection(db, 'goals'),
         where('userId', '==', user.uid),
-        orderBy('createdAt', 'desc')
       );
       const goalsSnapshot = await getDocs(goalsQuery);
       const goalsData = goalsSnapshot.docs.map(doc => ({ 

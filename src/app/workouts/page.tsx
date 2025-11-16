@@ -120,9 +120,9 @@ function WorkoutsContent() {
 
     // 5️⃣ Sort safely in frontend (no Firestore ordering needed)
     cleanedWorkouts.sort((a, b) => {
-      const da = a.date?.toDate ? a.date.toDate() : new Date();
-      const db = b.date?.toDate ? b.date.toDate() : new Date();
-      return db.getTime() - da.getTime();
+      const dateA = a.date?.toDate ? a.date.toDate() : new Date();
+      const dateB = b.date?.toDate ? b.date.toDate() : new Date();
+      return dateB.getTime() - dateA.getTime();
     });
 
     setWorkouts(cleanedWorkouts);
@@ -182,14 +182,17 @@ function WorkoutsContent() {
     try {
       const newWorkout = {
         userId: user.uid,
+        planTemplateId: plan.id,             // 🔥 Save the plan reference
         name: plan.name,
         type: plan.targetClientType,
         intensity: plan.difficulty?.toLowerCase() || "moderate",
+        exercises: plan.exercises || [],      // 🔥 SAVE EXERCISES
         duration: (plan.exercises?.length || 0) * 10,
         calories: (plan.exercises?.length || 0) * 50,
-        date: Timestamp.now(),
+        date: new Date(),
         notes: "Started predefined plan",
       };
+
 
       const workoutRef = await addDoc(collection(db, "workouts"), newWorkout);
 
@@ -372,7 +375,7 @@ function WorkoutList({ workouts, getIntensityColor, handleDeleteWorkout }: any) 
           key={workout.id}
           className="flex items-center justify-between border rounded-lg p-4 hover:bg-accent transition-colors"
         >
-          <div className="flex-1">
+          <Link href={`/workouts/${workout.id}`} className="flex-1 block">
             <div className="flex items-center gap-3 mb-2">
               <h3 className="font-semibold text-lg">{workout.name}</h3>
               <Badge variant="outline" className="capitalize">
@@ -385,13 +388,10 @@ function WorkoutList({ workouts, getIntensityColor, handleDeleteWorkout }: any) 
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <span className="flex items-center gap-1">
                 <Calendar className="h-4 w-4" />
-                {
-  workout.date &&
-    (workout.date.toDate
-      ? format(workout.date.toDate(), "MMM dd, yyyy")
-      : format(new Date(workout.date), "MMM dd, yyyy"))
-}
-
+                {workout.date &&
+                  (workout.date.toDate
+                    ? format(workout.date.toDate(), "MMM dd, yyyy")
+                    : format(new Date(workout.date), "MMM dd, yyyy"))}
               </span>
               <span className="flex items-center gap-1">
                 <Clock className="h-4 w-4" />
@@ -405,32 +405,35 @@ function WorkoutList({ workouts, getIntensityColor, handleDeleteWorkout }: any) 
             {workout.notes && (
               <p className="text-sm text-muted-foreground mt-2">{workout.notes}</p>
             )}
+          </Link>
+
+          <div className="ml-4 flex items-center justify-end">
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-destructive hover:text-destructive"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Delete Workout</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Are you sure you want to delete this workout? This action cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={() => handleDeleteWorkout(workout.id)}>
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-destructive hover:text-destructive"
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Delete Workout</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Are you sure you want to delete this workout? This action cannot be undone.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={() => handleDeleteWorkout(workout.id)}>
-                  Delete
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
         </div>
       ))}
     </div>
