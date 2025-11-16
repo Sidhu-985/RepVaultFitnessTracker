@@ -11,12 +11,13 @@ import { Activity, Flame, Heart, TrendingUp, Plus } from "lucide-react";
 import { db } from "@/lib/firebase";
 import { collection, query, where, getDocs, orderBy, limit } from "firebase/firestore";
 import { Goal, Workout } from "@/types";
-import { format } from "date-fns";
+import { format,isSameDay,subDays } from "date-fns";
 import Link from "next/link";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts";
+import { ca } from "date-fns/locale";
 
-// ✅ MAIN PAGE WRAPPER
+
 export default function DashboardPage() {
   return (
     <ProtectedRoute>
@@ -31,23 +32,73 @@ function DashboardContent() {
   const [loading, setLoading] = useState(true);
   const [goals, setGoals] = useState<Goal[]>([]);
   const [recentWorkouts, setRecentWorkouts] = useState<Workout[]>([]);
-  const [weeklyData] = useState([
-    { day: "Mon", steps: 8234, calories: 320 },
-    { day: "Tue", steps: 9456, calories: 380 },
-    { day: "Wed", steps: 7891, calories: 310 },
-    { day: "Thu", steps: 10234, calories: 420 },
-    { day: "Fri", steps: 8932, calories: 360 },
-    { day: "Sat", steps: 12456, calories: 480 },
-    { day: "Sun", steps: 8432, calories: 342 },
-  ]);
 
-  const [todayActivity] = useState({
-    steps: 8432,
-    calories: 342,
-    heartRate: 72,
-    distance: 6.2,
-    activeMinutes: 45,
-  });
+  const [totalSteps,setTotalSteps] = useState(0);
+  const [totalCalories,setTotalCalories] = useState(0);
+  const [avgHeartRate,setAvgHeartRate] = useState(0);
+  const [totalDistance,setTotalDistance] = useState(0);
+
+  const [weeklyData,setWeeklyData] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (user) {
+      fetchActivityData();
+    }
+  }, [user]);
+
+  const fetchActivityData = async () => {
+    try{
+      const q = query(
+        collection(db, "workouts"),
+        where("userId", "==", user!.uid),
+      );
+
+      const snap = await getDocs(q);
+      const workouts = snap.docs.map((doc) => doc.data());
+
+      let steps = 0;
+      let calories = 0;
+      let hRSum = 0;
+      let hRCount = 0;
+      let distance = 0;
+
+      workouts.forEach((workout) => {
+        steps += workout.steps || 0;
+        calories += workout.calories || 0;
+        distance += workout.distance || 0;
+
+        if (workout.heartRate) {
+          hRSum += workout.heartRate;
+          hRCount += 1;
+        }
+      });
+
+      setTotalSteps(steps);
+      setTotalCalories(calories);
+      setTotalDistance(distance);
+      setAvgHeartRate(hRCount > 0 ? Math.round(hRSum / hRCount) : 0);
+
+      const last7days = Array.from({ length: 7 }, (_, i) => {
+        const date = subDays(new Date(), i);
+
+        const todaysWorkouts = workouts.filter((w) =>
+          w.date?.toDate && isSameDay(w.date.toDate(), date)
+        );
+
+        return {
+          day: format(date, "EEE"),
+          steps: todaysWorkouts.reduce((sum, w) => sum + (w.steps || 0), 0),
+          calories: todaysWorkouts.reduce((sum, w) => sum + (w.calories || 0), 0),
+        };
+      }).reverse();
+
+      setWeeklyData(last7days);
+    }catch (err) {
+      console.error("Error loading stats:", err);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
     if (user) fetchDashboardData();
@@ -60,7 +111,6 @@ function DashboardContent() {
         collection(db, "goals"),
         where("userId", "==", user.uid),
         where("isCompleted", "==", false),
-        orderBy("createdAt", "desc"),
         limit(5)
       );
       const goalsSnapshot = await getDocs(goalsQuery);
@@ -70,7 +120,6 @@ function DashboardContent() {
       const workoutsQuery = query(
         collection(db, "workouts"),
         where("userId", "==", user.uid),
-        orderBy("date", "desc"),
         limit(5)
       );
       const workoutsSnapshot = await getDocs(workoutsQuery);
@@ -93,6 +142,13 @@ function DashboardContent() {
       </div>
     );
   }
+
+  const todayActivity = {
+    steps: totalSteps,
+    calories: totalCalories,
+    heartRate: avgHeartRate,
+    distance: totalDistance,
+  };
 
   return (
     <div className="min-h-screen bg-background">

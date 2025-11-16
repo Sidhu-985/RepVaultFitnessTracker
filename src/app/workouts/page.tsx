@@ -69,7 +69,6 @@ function WorkoutsContent() {
     const workoutsQuery = query(
       collection(db, "workouts"),
       where("userId", "==", user.uid)
-      // ❌ removed orderBy("date") because it crashes on bad data
     );
 
     const workoutsSnapshot = await getDocs(workoutsQuery);

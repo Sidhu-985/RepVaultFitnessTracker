@@ -5,8 +5,26 @@ import { Header } from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Activity, Target, TrendingUp, Bell, Shield, Smartphone, BarChart3, Heart } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function Home() {
+
+  const { user,loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && user) {
+      router.push('/dashboard');
+    }
+  }, [user, router, loading]);
+    
+  if (loading || user) {
+    return null; // or a loading spinner
+  }
+
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -43,7 +61,7 @@ export default function Home() {
               </div>
             </div>
             <div className="relative h-[400px] rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-              <div className="grid grid-cols-2 gap-4 p-8">
+              <div className="grid grid-cols-2 gap-4 p-8 absolute inset-0">
                 <Card className="transform hover:scale-105 transition-transform">
                   <CardHeader className="pb-3">
                     <Activity className="h-8 w-8 text-primary mb-2" />
