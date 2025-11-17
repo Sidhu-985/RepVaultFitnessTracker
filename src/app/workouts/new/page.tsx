@@ -20,7 +20,7 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { toast } from 'sonner';
 import { Toaster } from '@/components/ui/sonner';
 import Link from 'next/link';
-import { cn, updateGoalsProgress } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 export default function NewWorkoutPage() {
   return (
@@ -51,23 +51,17 @@ function NewWorkoutContent() {
     setLoading(true);
 
     try {
-      const caloriesBurned = parseInt(formData.calories);
-
       await addDoc(collection(db, 'workouts'), {
         userId: user.uid,
         name: formData.name,
         type: formData.type,
         duration: parseInt(formData.duration),
-        calories: caloriesBurned,
+        calories: parseInt(formData.calories),
         intensity: formData.intensity,
         notes: formData.notes,
         date: Timestamp.fromDate(date),
         createdAt: Timestamp.now(),
       });
-
-      // 🎯 Update user's goal progress
-      console.log('🎯 Updating goals progress with', caloriesBurned, 'calories...');
-      await updateGoalsProgress(user.uid, caloriesBurned);
 
       toast.success('Workout logged successfully!');
       router.push('/workouts');

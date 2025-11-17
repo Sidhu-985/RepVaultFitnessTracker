@@ -219,7 +219,7 @@ function WorkoutsContent() {
       case "high":
         return "bg-red-500/10 text-red-500";
       default:
-        return "bg-primary/10 text-primary"; 
+        return "bg-primary/10 text-primary";
     }
   };
 
@@ -236,8 +236,8 @@ function WorkoutsContent() {
 
   // Stats
   const totalWorkouts = workouts.length;
-  const totalDuration = workouts.reduce((sum, w) => sum + (Number(w.duration) || 0), 0);
-  const totalCalories = workouts.reduce((sum, w) => sum + (Number(w.calories) || 0), 0);
+  const totalDuration = workouts.reduce((sum, w) => sum + w.duration, 0);
+  const totalCalories = workouts.reduce((sum, w) => sum + w.calories, 0);
   const avgDuration = totalWorkouts > 0 ? Math.round(totalDuration / totalWorkouts) : 0;
 
   return (
