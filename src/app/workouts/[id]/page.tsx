@@ -145,6 +145,9 @@ export default function WorkoutDetailPage() {
                 ))}
               </ul>
             )}
+            <Button className="mt-8" variant="default">
+              <Link href={`/workouts/${workoutId}/edit`}>Add Exercises</Link>
+            </Button>
           </CardContent>
         </Card>
 
