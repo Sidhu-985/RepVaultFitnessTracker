@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
+import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Moon, Sun, Dumbbell, LogOut, User } from 'lucide-react';
 import {
@@ -17,6 +18,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 export function Header() {
   const { user, userData, signOut } = useAuth();
   const { theme, toggleTheme } = useTheme();
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
 
   const handleSignOut = async () => {
     try {
@@ -36,7 +39,7 @@ export function Header() {
         </Link>
 
         <nav className="flex items-center gap-6">
-          {user ? (
+          {!isHomePage && user ? (
             <>
               <Link href="/dashboard" className="text-sm font-medium hover:text-primary transition-colors">
                 Dashboard
@@ -74,7 +77,7 @@ export function Header() {
             )}
           </Button>
 
-          {user ? (
+          {!isHomePage && user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-10 w-10 rounded-full">
