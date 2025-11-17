@@ -196,11 +196,11 @@ function WorkoutsContent() {
       const workoutRef = await addDoc(collection(db, "workouts"), newWorkout);
 
       // Optional: store active plan
-      const userRef = doc(db, "users", user.uid);
-      await updateDoc(userRef, {
-        activeWorkoutTemplateId: plan.id,
-        goalIds: arrayUnion(workoutRef.id),
-      });
+      // const userRef = doc(db, "users", user.uid);
+      // await updateDoc(userRef, {
+      //   activeWorkoutTemplateId: plan.id,
+      //   goalIds: arrayUnion(workoutRef.id),
+      // });
 
       toast.success(`Started plan: ${plan.name}`);
       fetchWorkouts();
@@ -219,7 +219,7 @@ function WorkoutsContent() {
       case "high":
         return "bg-red-500/10 text-red-500";
       default:
-        return "bg-primary/10 text-primary";
+        return "bg-primary/10 text-primary"; 
     }
   };
 
@@ -236,8 +236,8 @@ function WorkoutsContent() {
 
   // Stats
   const totalWorkouts = workouts.length;
-  const totalDuration = workouts.reduce((sum, w) => sum + w.duration, 0);
-  const totalCalories = workouts.reduce((sum, w) => sum + w.calories, 0);
+  const totalDuration = workouts.reduce((sum, w) => sum + (Number(w.duration) || 0), 0);
+  const totalCalories = workouts.reduce((sum, w) => sum + (Number(w.calories) || 0), 0);
   const avgDuration = totalWorkouts > 0 ? Math.round(totalDuration / totalWorkouts) : 0;
 
   return (
