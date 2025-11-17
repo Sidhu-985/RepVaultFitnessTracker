@@ -8,7 +8,6 @@ export default function SeedPredefinedWorkouts() {
   useEffect(() => {
     const seedWorkouts = async () => {
       const templates = [
-  // ===================== GENERAL (4 PROGRAMS) ===================== //
   {
     name: "General Fitness Routine",
     targetClientType: "General",
@@ -53,7 +52,6 @@ export default function SeedPredefinedWorkouts() {
     ],
   },
 
-  // ===================== FAT LOSS (4 PROGRAMS) ===================== //
   {
     name: "Fat Burn Express",
     targetClientType: "FatLoss",
@@ -97,7 +95,6 @@ export default function SeedPredefinedWorkouts() {
     ],
   },
 
-  // ===================== STRENGTH TRAINING (4 PROGRAMS) ===================== //
   {
     name: "Strength Builder",
     targetClientType: "StrengthTraining",
