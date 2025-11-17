@@ -342,7 +342,7 @@ function RecommendedWorkouts({ clientType }: { clientType?: string }) {
       if (!clientType) return;
       const q = query(
         collection(db, "predefinedWorkouts"),
-        where("targetClientType", "in", [clientType, "General"])
+        where("targetClientType", "in", [clientType])
       );
       const snapshot = await getDocs(q);
       const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
