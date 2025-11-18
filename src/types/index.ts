@@ -8,7 +8,7 @@ export interface User {
   photoURL?: string;
   createdAt: Timestamp;
   updatedAt: Timestamp;
-  clientType?: 'General' | 'StrengthTraining' | 'FatLoss' |  'Flexibility'
+  clientType?: 'General' | 'StrengthTraining' | 'FatLoss' 
   age?: number;
   gender?: 'Male' | 'Female' | 'Other';
   height?: number; // in cm

@@ -179,6 +179,19 @@ function WorkoutsContent() {
   const handleStartPlan = async (plan: any) => {
     if (!user) return;
     try {
+
+      const duplicateWorkoutQuery = query(
+        collection(db,"workouts"),
+        where("userId","==",user.uid),
+        where("planTemplateId","==",plan.id)
+      )
+      const duplicateSnapshot = await getDocs(duplicateWorkoutQuery);
+      if (!duplicateSnapshot.empty) {
+        toast.error("You have already started this plan.");
+        return;
+      }
+      
+
       const newWorkout = {
         userId: user.uid,
         planTemplateId: plan.id,             // 🔥 Save the plan reference

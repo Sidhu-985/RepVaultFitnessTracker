@@ -1,14 +1,14 @@
 "use client";
 
-import { AuthProvider } from '@/contexts/AuthContext';
+import { AdminAuthProvider } from '@/contexts/AdminAuth';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
-      <AuthProvider>
+      <AdminAuthProvider>
           {children}
-      </AuthProvider>
+      </AdminAuthProvider>
     </ThemeProvider>
   );
 }
