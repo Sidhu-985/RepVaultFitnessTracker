@@ -43,6 +43,12 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+    /* Custom Accent Colors for Light Mode Only */
+  --color-brand-red: #ef4444;
+  --color-brand-blue: #3b82f6;
+  --color-brand-green: #22c55e;
+  --color-brand-yellow: #eab308;
+
 }
 
 :root {
@@ -126,4 +132,38 @@
 /* Hide Next.js error overlay portal */
 nextjs-portal {
   display: none !important;
+}
+
+/* Icon helpers */
+.icon-red { color: var(--color-brand-red); }
+.icon-blue { color: var(--color-brand-blue); }
+.icon-green { color: var(--color-brand-green); }
+.icon-yellow { color: var(--color-brand-yellow); }
+
+/* Button helpers */
+.btn-blue {
+  background: var(--color-brand-blue);
+  color: white;
+  &:hover { background: color-mix(in srgb, var(--color-brand-blue) 80%, #000); }
+}
+.btn-red {
+  background: var(--color-brand-red);
+  color: white;
+}
+.btn-yellow {
+  background: var(--color-brand-yellow);
+  color: black;
+}
+.btn-green {
+  background: var(--color-brand-green);
+  color: white;
+}
+.btn-blue-outline {
+  background: transparent;
+  color: var(--color-brand-blue);
+  border: 2px solid var(--color-brand-blue);
+  &:hover {
+    background: var(--color-brand-blue);
+    color: white;
+  }
 }

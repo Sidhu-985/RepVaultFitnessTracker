@@ -26,7 +26,6 @@ export default function DashboardPage() {
   );
 }
 
-// ✅ DASHBOARD CONTENT COMPONENT
 function DashboardContent() {
   const { user, userData } = useAuth();
   const [loading, setLoading] = useState(true);
@@ -172,10 +171,10 @@ function DashboardContent() {
 
         {/* Activity Summary Cards */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <ActivityCard title="Steps" icon={<Activity />} value={todayActivity.steps} target={10000} unit="steps" />
-          <ActivityCard title="Calories" icon={<Flame />} value={todayActivity.calories} target={500} unit="kcal" />
-          <ActivityCard title="Heart Rate" icon={<Heart />} value={todayActivity.heartRate} unit="BPM" />
-          <ActivityCard title="Distance" icon={<TrendingUp />} value={todayActivity.distance} unit="km" />
+          <ActivityCard title="Steps" icon={<Activity className="text-brand-green"/>} value={todayActivity.steps} target={10000} unit="steps" />
+          <ActivityCard title="Calories" icon={<Flame className="text-brand-yellow"/>} value={todayActivity.calories} target={500} unit="kcal" />
+          <ActivityCard title="Heart Rate" icon={<Heart className="text-brand-red"/>} value={todayActivity.heartRate} unit="BPM" />
+          <ActivityCard title="Distance" icon={<TrendingUp className="text-brand-blue"/>} value={todayActivity.distance} unit="km" />
         </div>
 
         {/* Weekly Progress Chart */}

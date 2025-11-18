@@ -275,10 +275,10 @@ function WorkoutsContent() {
 
         {/* Stats */}
         <div className="grid gap-4 md:grid-cols-4">
-          <StatCard title="Total Workouts" icon={<TrendingUp />} value={totalWorkouts} />
-          <StatCard title="Total Duration" icon={<Clock />} value={`${totalDuration} min`} />
-          <StatCard title="Total Calories" icon={<Flame />} value={`${totalCalories} cal`} />
-          <StatCard title="Avg Duration" icon={<Clock />} value={`${avgDuration} min`} />
+          <StatCard title="Total Workouts" icon={<TrendingUp className="text-brand-blue"/>} value={totalWorkouts} />
+          <StatCard title="Total Duration" icon={<Clock className="text-brand-yellow"/>} value={`${totalDuration} min`} />
+          <StatCard title="Total Calories" icon={<Flame className="text-brand-red"/>} value={`${totalCalories} cal`} />
+          <StatCard title="Avg Duration" icon={<Clock className="text-brand-yellow"/>} value={`${avgDuration} min`} />
         </div>
 
         {/* ✅ Recommended Plans Section */}
