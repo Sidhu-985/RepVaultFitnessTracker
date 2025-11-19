@@ -33,6 +33,9 @@ function ProfileContent() {
     displayName: userData?.displayName || '',
     email: userData?.email || '',
     clientType: userData?.clientType || '',
+    age: userData?.age || '',
+    height: userData?.height || '',
+    weight: userData?.weight || '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,6 +51,9 @@ function ProfileContent() {
     await updateDoc(userRef, {
       displayName: formData.displayName,
       clientType: formData.clientType,
+      age: formData.age,
+      height: formData.height,
+      weight: formData.weight,
       updatedAt: new Date(),
     });
 
@@ -167,6 +173,39 @@ function ProfileContent() {
                   <SelectItem value="General">General</SelectItem>
                 </SelectContent>
               </Select>
+                </div>
+
+                <div className='space-y-3'>
+                  <Label htmlFor="age">Age</Label>
+                  <Input
+                  id="age"
+                  type="number"
+                  value={formData.age}
+                  onChange={(e) => setFormData({...formData,age:e.target.value})}
+                  placeholder='18'
+                  />
+                </div>
+
+                <div className='space-y-3'>
+                  <Label htmlFor="height">Height (cm)</Label>
+                  <Input
+                  id="height"
+                  type="number"
+                  value={formData.height}
+                  onChange={(e) => setFormData({...formData,height:e.target.value})}
+                  placeholder='170' 
+                  />
+                </div>
+
+                <div className='space-y-3'>
+                  <Label htmlFor="weight">Weight (kg)</Label>
+                  <Input
+                  id="weight"
+                  type="number"
+                  value={formData.weight}
+                  onChange={(e) => setFormData({...formData,weight:e.target.value})}
+                  placeholder='70'
+                  />
                 </div>
 
                 <Button type="submit" disabled={loading}>
