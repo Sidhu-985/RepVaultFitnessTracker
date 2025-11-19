@@ -74,7 +74,7 @@ export default function WorkoutDetailPage() {
   if (!workout) return null;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-app-gradient">
       <Header />
 
       <main className="container mx-auto p-6 space-y-6">
@@ -86,7 +86,7 @@ export default function WorkoutDetailPage() {
           </Button>
         </div>
 
-        <Card>
+        <Card className="card-tinted">
           <CardHeader>
             <CardTitle>Workout Summary</CardTitle>
           </CardHeader>
@@ -124,7 +124,7 @@ export default function WorkoutDetailPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="card-tinted shadow-md">
           <CardHeader>
             <CardTitle>Exercises</CardTitle>
           </CardHeader>

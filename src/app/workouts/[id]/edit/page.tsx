@@ -224,6 +224,25 @@ export default function EditWorkoutPage() {
     }
   };
 
+  const selectdiffcolor = (intensity: string) => {
+  const value = intensity.trim().toLowerCase();
+
+  if (["low", "light", "easy"].includes(value)) {
+    return <Badge className="mt-2 bg-green-500">{intensity}</Badge>;
+  }
+
+  if (["medium", "moderate", "mid"].includes(value)) {
+    return <Badge className="mt-2 bg-yellow-500">{intensity}</Badge>;
+  }
+
+  if (["hard", "high", "intense", "high intensity"].includes(value)) {
+    return <Badge className="mt-2 bg-red-500">{intensity}</Badge>;
+  }
+
+  return <Badge className="mt-2 bg-gray-500">{intensity}</Badge>;
+};
+
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background">
@@ -237,7 +256,7 @@ export default function EditWorkoutPage() {
 
   if (!workout) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-app-gradient">
         <Header />
         <div className="container mx-auto p-6">
           <p className="text-muted-foreground">Workout not found</p>
@@ -247,7 +266,7 @@ export default function EditWorkoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-app-gradient">
       <Header />
 
       <main className="container mx-auto p-6 space-y-6">
@@ -273,7 +292,7 @@ export default function EditWorkoutPage() {
         )}
 
         {/* Workout Info Card */}
-        <Card>
+        <Card className='card-tinted shadow-xl'>
           <CardHeader>
             <CardTitle>Workout Information</CardTitle>
           </CardHeader>
@@ -285,7 +304,7 @@ export default function EditWorkoutPage() {
               </div>
               <div>
                 <Label className="text-sm font-medium">Intensity</Label>
-                <Badge className="mt-2">{workout.intensity}</Badge>
+                {selectdiffcolor(workout.intensity)}
               </div>
             </div>
             {workout.notes && (
@@ -298,7 +317,7 @@ export default function EditWorkoutPage() {
         </Card>
 
         {/* Current Exercises */}
-        <Card>
+        <Card className='card-tinted shadow-md'>
           <CardHeader>
             <CardTitle>Exercises ({exercises.length})</CardTitle>
             <CardDescription>Manage exercises for this workout</CardDescription>
@@ -357,7 +376,7 @@ export default function EditWorkoutPage() {
         </Card>
 
         {/* Add New Exercise */}
-        <Card>
+        <Card className='card-tinted shadow-lg'>
           <CardHeader>
             <CardTitle>Add Exercise</CardTitle>
             <CardDescription>Add a new exercise to this workout</CardDescription>
@@ -370,7 +389,7 @@ export default function EditWorkoutPage() {
                 placeholder="e.g., Bench Press, Squats, Running"
                 value={newExercise.name}
                 onChange={(e) => setNewExercise({ ...newExercise, name: e.target.value })}
-                className='m-4'
+                className='m-4 border-color-black'
                 required
               />
             </div>
@@ -382,7 +401,7 @@ export default function EditWorkoutPage() {
                   id="sets"
                   min="1"
                   type='number'
-                  className='m-4'
+                  className='m-4 border-color-black'
                   placeholder=''
                   value={newExercise.sets}
                   onChange={(e) => setNewExercise({ ...newExercise, sets: parseInt(e.target.value)})}
@@ -393,7 +412,7 @@ export default function EditWorkoutPage() {
                 <Input
                   id="reps"
                   min="1"
-                  className='m-4'
+                  className='m-4 border-color-black'
                   type='number'
                   value={newExercise.reps}
                   placeholder='23'
@@ -411,7 +430,7 @@ export default function EditWorkoutPage() {
                   type='number'
                   step="0.5"
                   placeholder="0"
-                  className='m-4'
+                  className='m-4 border-color-black'
                   value={newExercise.weight}
                   onChange={(e) => setNewExercise({ ...newExercise, weight: parseFloat(e.target.value)})}
                   required
@@ -425,7 +444,7 @@ export default function EditWorkoutPage() {
                   min="0"
                   step="0.5"
                   placeholder="60"
-                  className='m-4'
+                  className='m-4 border-color-black'
                   value={newExercise.duration}
                   onChange={(e) => setNewExercise({ ...newExercise, duration: parseFloat(e.target.value)})}
                   required
@@ -439,7 +458,7 @@ export default function EditWorkoutPage() {
                 id="notes"
                 placeholder="e.g., Felt strong, good form"
                 value={newExercise.notes}
-                className='m-4'
+                className='m-4 border-color-black'
                 onChange={(e) => setNewExercise({ ...newExercise, notes: e.target.value })}
                 required
               />

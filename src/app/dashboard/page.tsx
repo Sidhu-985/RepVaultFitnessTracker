@@ -150,7 +150,7 @@ function DashboardContent() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-app-gradient">
       <Header />
       <main className="container mx-auto p-6 space-y-6">
         {/* Header Section */}
@@ -178,7 +178,7 @@ function DashboardContent() {
         </div>
 
         {/* Weekly Progress Chart */}
-        <Card className="w-full">
+        <Card className="w-full card-tinted shadow-md">
           <CardHeader>
             <CardTitle>Weekly Progress</CardTitle>
             <CardDescription>Your activity over the past week</CardDescription>
@@ -222,7 +222,7 @@ function DashboardContent() {
 
 function ActivityCard({ title, icon, value, target, unit }: any) {
   return (
-    <Card>
+    <Card className="card-tinted shadow-xl">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
         <div className="h-4 w-4 text-muted-foreground">{icon}</div>
@@ -244,7 +244,7 @@ function ActivityCard({ title, icon, value, target, unit }: any) {
 
 function GoalSection({ goals }: { goals: Goal[] }) {
   return (
-    <Card>
+    <Card className="card-tinted shadow-md">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Active Goals</CardTitle>
@@ -287,7 +287,7 @@ function GoalSection({ goals }: { goals: Goal[] }) {
 
 function RecentWorkoutsSection({ workouts }: { workouts: Workout[] }) {
   return (
-    <Card>
+    <Card className="card-tinted shadow-md">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Recent Workouts</CardTitle>
@@ -354,7 +354,7 @@ function RecommendedWorkouts({ clientType }: { clientType?: string }) {
   if (loading) return null;
 
   return (
-    <Card>
+    <Card className="w-full card-tinted shadow-xl">
       <CardHeader>
         <CardTitle>Recommended Workouts</CardTitle>
         <CardDescription>Workouts matched to your fitness type</CardDescription>

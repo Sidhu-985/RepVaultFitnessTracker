@@ -74,7 +74,7 @@ function NewWorkoutContent() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-app-gradient">
       <Header />
       <Toaster />
       
@@ -103,6 +103,7 @@ function NewWorkoutContent() {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
+                  className='border-color-black'
                 />
               </div>
 
@@ -114,7 +115,7 @@ function NewWorkoutContent() {
                     onValueChange={(value) => setFormData({ ...formData, type: value })}
                     required
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className='border-color-black'>
                       <SelectValue placeholder="Select workout type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -134,7 +135,7 @@ function NewWorkoutContent() {
                     onValueChange={(value) => setFormData({ ...formData, intensity: value })}
                     required
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className='border-color-black'>
                       <SelectValue placeholder="Select intensity" />
                     </SelectTrigger>
                     <SelectContent>
@@ -157,6 +158,7 @@ function NewWorkoutContent() {
                     onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
                     required
                     min="1"
+                    className='border-color-black'
                   />
                 </div>
 
@@ -170,6 +172,7 @@ function NewWorkoutContent() {
                     onChange={(e) => setFormData({ ...formData, calories: e.target.value })}
                     required
                     min="0"
+                    className='border-color-black'
                   />
                 </div>
               </div>
@@ -208,6 +211,7 @@ function NewWorkoutContent() {
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   rows={4}
+                  className='border-color-black'
                 />
               </div>
 

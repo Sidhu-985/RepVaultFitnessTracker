@@ -63,9 +63,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-primary/5 p-4">
+    <div
+      className="min-h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center"
+      style={{ backgroundImage: `url('images/Loginpage.png')` }}
+    >
       <Toaster />
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md card-tinted shadow-lg">
         <CardHeader className="space-y-1">
           <div className="flex items-center justify-center mb-4">
             <Dumbbell className="h-12 w-12 text-primary" />
@@ -141,6 +144,15 @@ export default function LoginPage() {
             <Chrome className="mr-2 h-4 w-4" />
             Google
           </Button>
+        </CardContent>
+        <CardContent>
+          <p className="text-sm text-center w-full text-muted-foreground">
+            Login as 
+            <Link href="/admin/login" className="text-primary hover:underline ml-1">
+            Admin
+            </Link>
+
+            </p>
         </CardContent>
         <CardFooter>
           <p className="text-sm text-center w-full text-muted-foreground">

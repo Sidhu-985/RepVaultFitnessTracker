@@ -227,7 +227,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-app-gradient">
       <Headeradmin   />
       <div className="container my-8 mx-20">
         <div className="flex justify-between items-center mb-6">
@@ -240,7 +240,7 @@ export default function AdminPage() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <Card>
+          <Card className='card-tinted shadow-xl'>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Total Users</CardTitle>
             </CardHeader>
@@ -248,7 +248,7 @@ export default function AdminPage() {
               <div className="text-2xl font-bold">{counts.users}</div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className='card-tinted shadow-xl'>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Total Workouts</CardTitle>
             </CardHeader>
@@ -256,7 +256,7 @@ export default function AdminPage() {
               <div className="text-2xl font-bold">{counts.workouts}</div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className='card-tinted shadow-xl'>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Predefined</CardTitle>
             </CardHeader>
@@ -264,7 +264,7 @@ export default function AdminPage() {
               <div className="text-2xl font-bold">{counts.predefinedWorkouts}</div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className='card-tinted shadow-xl'>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Total Goals</CardTitle>
             </CardHeader>
@@ -283,7 +283,7 @@ export default function AdminPage() {
 
         {/* Admins Table */}
         {/* Add Predefined Workout Form */}
-        <Card className="mb-6">
+        <Card className="mb-6 card-tinted shadow-lg">
           <CardHeader>
             <CardTitle>Add Predefined Workout</CardTitle>
           </CardHeader>
@@ -297,6 +297,7 @@ export default function AdminPage() {
                   onChange={(e) => setNewWorkout((s: any) => ({ ...s, name: e.target.value }))}
                   placeholder="e.g., Full Body Beginner"
                   required
+                  className='border-color-black'
                 />
               </div>
 
@@ -307,14 +308,14 @@ export default function AdminPage() {
                   value={newWorkout.description}
                   onChange={(e) => setNewWorkout((s: any) => ({ ...s, description: e.target.value }))}
                   placeholder="Brief description of the workout"
-                  className="min-h-20"
+                  className="min-h-20 border-color-000"
                 />
               </div>
 
               <div className="space-y-3">
                 <Label htmlFor='workout-name'>Client Type:</Label>
                 <Select onValueChange={(value) => setNewWorkout((s: any) => ({ ...s, targetClientType: value }))}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full border-color-000">
                     <SelectValue placeholder="Select client type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -328,7 +329,7 @@ export default function AdminPage() {
               <div className="space-y-3">
                 <Label htmlFor='workout-name'>Difficulty:</Label>
                 <Select onValueChange={(value) => setNewWorkout((s: any) => ({ ...s, difficulty: value }))}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full border-color-black">
                     <SelectValue placeholder="Select difficulty" />
                   </SelectTrigger>
                   <SelectContent>
@@ -368,6 +369,7 @@ export default function AdminPage() {
                             value={ex.name}
                             onChange={(ev) => updateExerciseField(idx, 'name', ev.target.value)}
                             size={undefined}
+                            className='border-color-black'
                           />
                         </div>
                         <div className="w-24 space-y-1">
@@ -378,6 +380,7 @@ export default function AdminPage() {
                             onChange={(ev) => updateExerciseField(idx, 'sets', ev.target.value)}
                             type="number"
                             min="1"
+                            className='border-color-black'
                           />
                         </div>
                         <div className="w-24 space-y-1">
@@ -388,6 +391,7 @@ export default function AdminPage() {
                             onChange={(ev) => updateExerciseField(idx, 'reps', ev.target.value)}
                             type="number"
                             min="1"
+                            className='border-color-black'
                           />
                         </div>
                         <Button
@@ -412,7 +416,7 @@ export default function AdminPage() {
             </form>
           </CardContent>
         </Card>
-        <Card>
+        <Card className='card-tinted shadow-xl'>
           <CardHeader>
             <CardTitle>Admin Accounts ({admins.length})</CardTitle>
           </CardHeader>

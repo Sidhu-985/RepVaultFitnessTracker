@@ -62,7 +62,7 @@ export default function AdminLoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md card-tinted shadow-lg">
         <CardHeader>
           <CardTitle className="text-2xl">{isLogin ? 'Admin Login' : 'Create Admin Account'}</CardTitle>
           <CardDescription>

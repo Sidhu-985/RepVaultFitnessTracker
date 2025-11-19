@@ -154,7 +154,7 @@ function NewGoalContent() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-app-gradient">
       <Header />
       <Toaster />
 
@@ -187,6 +187,7 @@ function NewGoalContent() {
                     setFormData({ ...formData, title: e.target.value })
                   }
                   required
+                  className="border-color-black"
                 />
               </div>
 
@@ -198,8 +199,8 @@ function NewGoalContent() {
                     onValueChange={handleTypeChange}
                     required
                   >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select goal type" />
+                    <SelectTrigger className="border-color-black">
+                      <SelectValue placeholder="Select goal type" className="border-color-black"/>
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="steps">Steps</SelectItem>
@@ -218,8 +219,8 @@ function NewGoalContent() {
                     onValueChange={handlePeriodChange}
                     required
                   >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select period" />
+                    <SelectTrigger className="border-color-black">
+                      <SelectValue placeholder="Select period" className="border-color-black"/>
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="daily">Daily</SelectItem>
@@ -243,6 +244,7 @@ function NewGoalContent() {
                     }
                     required
                     min="1"
+                    className="border-color-black"
                   />
                 </div>
 
@@ -256,6 +258,7 @@ function NewGoalContent() {
                       setFormData({ ...formData, unit: e.target.value })
                     }
                     required
+                    className="border-color-black "
                   />
                 </div>
               </div>

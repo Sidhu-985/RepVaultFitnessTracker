@@ -254,7 +254,7 @@ function WorkoutsContent() {
   const avgDuration = totalWorkouts > 0 ? Math.round(totalDuration / totalWorkouts) : 0;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-app-gradient">
       <Header />
       <Toaster />
 
@@ -282,7 +282,7 @@ function WorkoutsContent() {
         </div>
 
         {/* ✅ Recommended Plans Section */}
-        <Card>
+        <Card className="card-tinted shadow-md">
           <CardHeader>
             <CardTitle>Recommended Workout Plans</CardTitle>
             <CardDescription>
@@ -323,7 +323,7 @@ function WorkoutsContent() {
         </Card>
 
         {/* Workout History */}
-        <Card>
+        <Card className="card-tinted shadow-xl">
           <CardHeader>
             <CardTitle>Workout History</CardTitle>
             <CardDescription>View all your logged workouts</CardDescription>
@@ -349,7 +349,7 @@ function WorkoutsContent() {
 
 function StatCard({ title, icon, value }: any) {
   return (
-    <Card>
+    <Card className="card-tinted shadow-xl">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
         <div className="h-4 w-4 text-muted-foreground">{icon}</div>

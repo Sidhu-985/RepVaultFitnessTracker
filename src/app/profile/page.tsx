@@ -13,6 +13,10 @@ import { User, Mail, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
 import { Toaster } from '@/components/ui/sonner';
+import { SelectItem,Select,SelectContent,SelectTrigger,SelectValue } from '@/components/ui/select';
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+
 
 export default function ProfilePage() {
   return (
@@ -28,25 +32,39 @@ function ProfileContent() {
   const [formData, setFormData] = useState({
     displayName: userData?.displayName || '',
     email: userData?.email || '',
+    clientType: userData?.clientType || '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+  setLoading(true);
 
-    try {
-      // Update profile logic would go here
-      toast.success('Profile updated successfully!');
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      toast.error('Failed to update profile');
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    if (!user) return;
+
+    // Update Firestore user document
+    const userRef = doc(db, "users", user.uid);
+
+    await updateDoc(userRef, {
+      displayName: formData.displayName,
+      clientType: formData.clientType,
+      updatedAt: new Date(),
+    });
+
+    toast.success("Profile updated successfully!");
+    window.location.reload();
+
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    toast.error("Failed to update profile");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-app-gradient">
       <Header />
       <Toaster />
       
@@ -78,12 +96,7 @@ function ProfileContent() {
               </div>
 
               <div className="grid gap-4 pt-4 border-t">
-                <div className="flex items-center gap-3">
-                  <User className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="text-sm font-medium">User ID</p>
-                    <p className="text-sm text-muted-foreground">{user?.uid}</p>
-                  </div>
+                <div className="flex items-center gap-3">                  
                 </div>
                 <div className="flex items-center gap-3">
                   <Mail className="h-5 w-5 text-muted-foreground" />
@@ -134,6 +147,26 @@ function ProfileContent() {
                     disabled
                   />
                   <p className="text-xs text-muted-foreground">Email cannot be changed</p>
+                </div>
+
+                <div className='space-y-3'>
+                  <Label htmlFor="targetClient">Client Type</Label>
+                  <Select
+                value={formData.clientType || ''}
+                onValueChange={(value) => setFormData({ ...formData, clientType: value })}
+                required
+              >
+                <SelectTrigger id="clientType">
+                  <SelectValue placeholder="Select your fitness focus" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="StrengthTraining">
+                    Strength Training
+                  </SelectItem>
+                  <SelectItem value="FatLoss">Fat Loss</SelectItem>
+                  <SelectItem value="General">General</SelectItem>
+                </SelectContent>
+              </Select>
                 </div>
 
                 <Button type="submit" disabled={loading}>

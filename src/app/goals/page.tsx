@@ -137,7 +137,7 @@ function GoalsContent() {
     const progressPercentage = Math.min((goal.currentValue / goal.targetValue) * 100, 100);
 
     return (
-      <Card className="hover:shadow-lg transition-shadow">
+      <Card className="hover:shadow-lg transition-shadow card-tinted shadow-md">
         <CardHeader>
           <div className="flex items-start justify-between">
             <div className="flex-1">
@@ -203,7 +203,7 @@ function GoalsContent() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-app-gradient">
       <Header />
       <Toaster />
       
@@ -224,40 +224,40 @@ function GoalsContent() {
 
         {/* Stats Cards */}
         <div className="grid gap-4 md:grid-cols-4">
-          <Card>
+          <Card className='card-tinted shadow-md'>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Goals</CardTitle>
-              <Target className="h-4 w-4 text-muted-foreground" />
+              <Target className="h-7 w-7 text-brand-purple" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{totalGoals}</div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className='card-tinted shadow-md'>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Active</CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+              <TrendingUp className="h-7 w-7 text-brand-red" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{activeCount}</div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className='card-tinted shadow-md'>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Completed</CardTitle>
-              <Target className="h-4 w-4 text-muted-foreground" />
+              <Target className="h-7 w-7 text-brand-green" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{completedCount}</div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className='card-tinted shadow-md'>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Success Rate</CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+              <TrendingUp className="h-7 w-7 text-brand-yellow" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{completionRate}%</div>
@@ -275,7 +275,7 @@ function GoalsContent() {
 
           <TabsContent value="active" className="space-y-4">
             {activeGoals.length === 0 ? (
-              <Card>
+              <Card className='card-tinted shadow-xl'>
                 <CardContent className="text-center py-12">
                   <Target className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
                   <h3 className="text-lg font-semibold mb-2">No active goals</h3>

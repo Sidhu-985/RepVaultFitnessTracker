@@ -31,7 +31,7 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/90 backdrop-blur-sm shadow-sm ">
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <Dumbbell className="h-6 w-6 text-primary" />
@@ -46,6 +46,9 @@ export function Header() {
               </Link>
               <Link href="/workouts" className="text-sm font-medium hover:text-primary transition-colors">
                 Workouts
+              </Link>
+              <Link href='/nutrition' className="text-sm font-medium hover:text-primary transition-colors">
+              Nutrition
               </Link>
               <Link href="/goals" className="text-sm font-medium hover:text-primary transition-colors">
                 Goals
@@ -64,7 +67,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button
+          {/* <Button
             variant="ghost"
             size="icon"
             onClick={toggleTheme}
@@ -75,7 +78,7 @@ export function Header() {
             ) : (
               <Sun className="h-5 w-5" />
             )}
-          </Button>
+          </Button> */}
 
           {!isHomePage && user ? (
             <DropdownMenu>
