@@ -48,30 +48,30 @@ export default function Home() {
             </div>
             <div className="relative h-[400px] rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
               <div className="grid grid-cols-2 gap-4 p-8 absolute inset-0">
-                <Card className="transform hover:scale-105 transition-transform">
+                <Card className="transform hover:scale-105 transition-transform group">
                   <CardHeader className="pb-3">
-                    <Activity className="h-8 w-8 text-primary mb-2" />
+                    <Activity className="h-8 w-8 text-primary mb-2 group-hover:text-red-500" />
                     <CardTitle className="text-2xl">12.5K</CardTitle>
                     <CardDescription>Steps Today</CardDescription>
                   </CardHeader>
                 </Card>
-                <Card className="transform hover:scale-105 transition-transform">
+                <Card className="transform hover:scale-105 transition-transform group">
                   <CardHeader className="pb-3">
-                    <TrendingUp className="h-8 w-8 text-primary mb-2" />
+                    <TrendingUp className="h-8 w-8 text-primary mb-2 group-hover:text-orange-500" />
                     <CardTitle className="text-2xl">450</CardTitle>
                     <CardDescription>Calories Burned</CardDescription>
                   </CardHeader>
                 </Card>
-                <Card className="transform hover:scale-105 transition-transform">
+                <Card className="transform hover:scale-105 transition-transform group">
                   <CardHeader className="pb-3">
-                    <Target className="h-8 w-8 text-primary mb-2" />
+                    <Target className="h-8 w-8 text-primary mb-2 group-hover:text-green-500" />
                     <CardTitle className="text-2xl">8/10</CardTitle>
                     <CardDescription>Goals Achieved</CardDescription>
                   </CardHeader>
                 </Card>
-                <Card className="transform hover:scale-105 transition-transform">
+                <Card className="transform hover:scale-105 transition-transform group">
                   <CardHeader className="pb-3">
-                    <BarChart3 className="h-8 w-8 text-primary mb-2" />
+                    <BarChart3 className="h-8 w-8 text-primary mb-2 group-hover:text-purple-500" />
                     <CardTitle className="text-2xl">72</CardTitle>
                     <CardDescription>BPM Heart Rate</CardDescription>
                   </CardHeader>
@@ -93,9 +93,9 @@ export default function Home() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card>
+            <Card className="group hover:shadow-[0_0_20px_5px_rgba(255,0,0,0.8)] transition-shadow">
               <CardHeader>
-                <Activity className="h-12 w-12 text-primary mb-4" />
+                <Activity className="h-12 w-12 text-primary mb-4 group-hover:text-red-500" />
                 <CardTitle>Activity Tracking</CardTitle>
                 <CardDescription>
                   Monitor your daily steps, calories burned, distance traveled, and active minutes in real-time.
@@ -103,9 +103,9 @@ export default function Home() {
               </CardHeader>
             </Card>
 
-            <Card>
+            <Card className='group hover:shadow-[0_0_20px_5px_rgba(0,128,0,0.8)] transition-shadow'>
               <CardHeader>
-                <Target className="h-12 w-12 text-primary mb-4" />
+                <Target className="h-12 w-12 text-primary mb-4 group-hover:text-green-500" />
                 <CardTitle>Goal Management</CardTitle>
                 <CardDescription>
                   Set personalized fitness goals and track your progress with detailed analytics and insights.
@@ -113,9 +113,9 @@ export default function Home() {
               </CardHeader>
             </Card>
 
-            <Card>
+            <Card className='group hover:shadow-[0_0_20px_5px_rgba(128,0,128,0.8)] transition-shadow'>
               <CardHeader>
-                <BarChart3 className="h-12 w-12 text-primary mb-4" />
+                <BarChart3 className="h-12 w-12 text-primary mb-4 group-hover:text-purple-600" />
                 <CardTitle>Workout Logging</CardTitle>
                 <CardDescription>
                   Log workouts manually or automatically detect activities with comprehensive workout history.
@@ -123,9 +123,9 @@ export default function Home() {
               </CardHeader>
             </Card>
 
-            <Card>
+            <Card className='group hover:shadow-[0_0_20px_5px_rgba(255,255,0,0.8)] transition-shadow'>
               <CardHeader>
-                <Heart className="h-12 w-12 text-primary mb-4" />
+                <Heart className="h-12 w-12 text-primary mb-4 group-hover:text-yellow-500" />
                 <CardTitle>Health Metrics</CardTitle>
                 <CardDescription>
                   Track heart rate, calories, and other vital health metrics to optimize your workouts.
@@ -133,9 +133,9 @@ export default function Home() {
               </CardHeader>
             </Card>
 
-            <Card>
+            <Card className='group hover:shadow-[0_0_20px_5px_rgba(255,165,0,0.8)] transition-shadow'>
               <CardHeader>
-                <Bell className="h-12 w-12 text-primary mb-4" />
+                <Bell className="h-12 w-12 text-primary mb-4 group-hover:text-orange-400" />
                 <CardTitle>Smart Reminders</CardTitle>
                 <CardDescription>
                   Receive personalized reminders and notifications to stay on track with your fitness goals.
@@ -143,9 +143,9 @@ export default function Home() {
               </CardHeader>
             </Card>
 
-            <Card>
+            <Card className='group hover:shadow-[0_0_20px_5px_rgba(0,0,255,0.8)] transition-shadow'>
               <CardHeader>
-                <Smartphone className="h-12 w-12 text-primary mb-4" />
+                <Smartphone className="h-12 w-12 text-primary mb-4 group-hover:text-blue-700" />
                 <CardTitle>Multi-Platform Sync</CardTitle>
                 <CardDescription>
                   Seamlessly sync data across devices and integrate with Google Fit and Apple Health.

@@ -133,9 +133,9 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-primary/5 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-primary/5 p-4 bg-cover bg-center" style={{ backgroundImage: `url('/images/LoginPage2.png')` }}>
       <Toaster />
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md card-tinted shadow-lg">
         <CardHeader className="space-y-1">
           <div className="flex items-center justify-center mb-4">
             <Dumbbell className="h-12 w-12 text-primary" />

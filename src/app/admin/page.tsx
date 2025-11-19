@@ -227,7 +227,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-app-gradient">
+    <div className="min-h-screen bg-app-gradient ">
       <Headeradmin   />
       <div className="container my-8 mx-20">
         <div className="flex justify-between items-center mb-6">

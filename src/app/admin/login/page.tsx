@@ -61,7 +61,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
+    <div className="min-h-screen flex items-center justify-center bg-background p-4 bg-cover bg-center" style={{ backgroundImage: `url('/images/Loginpage2.png')` }}>
       <Card className="w-full max-w-md card-tinted shadow-lg">
         <CardHeader>
           <CardTitle className="text-2xl">{isLogin ? 'Admin Login' : 'Create Admin Account'}</CardTitle>

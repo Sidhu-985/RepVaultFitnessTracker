@@ -65,7 +65,7 @@ export default function LoginPage() {
   return (
     <div
       className="min-h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center"
-      style={{ backgroundImage: `url('images/Loginpage.png')` }}
+      style={{ backgroundImage: `url('images/Loginpage2.png')` }}
     >
       <Toaster />
       <Card className="w-full max-w-md card-tinted shadow-lg">
