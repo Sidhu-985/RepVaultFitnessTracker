@@ -34,7 +34,7 @@ export default function LoginPage() {
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message || "Failed to sign in. Please check your credentials.",
+        description: "Failed to sign in. Please check your credentials.",
         variant: "destructive",
       });
     } finally {
@@ -54,7 +54,7 @@ export default function LoginPage() {
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message || "Failed to sign in with Google.",
+        description: "Failed to sign in with Google.",
         variant: "destructive",
       });
     } finally {

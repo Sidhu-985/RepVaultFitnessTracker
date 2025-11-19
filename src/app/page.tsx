@@ -15,8 +15,7 @@ export default function Home() {
     <div className="min-h-screen">
       <Header />
       
-      {/* Hero Section */}
-      <section className="relative py-20 px-4 bg-gradient-to-br from-primary/10 via-background to-primary/5">
+      <section className="relative py-20 px-4 bg-blue-100 from-primary/10 via-background to-primary/5">
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
@@ -82,7 +81,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
       <section id="features" className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
@@ -145,7 +143,7 @@ export default function Home() {
 
             <Card className='group hover:shadow-[0_0_20px_5px_rgba(0,0,255,0.8)] transition-shadow'>
               <CardHeader>
-                <Smartphone className="h-12 w-12 text-primary mb-4 group-hover:text-blue-700" />
+                <Smartphone className="h-12 w-12 text-primary mb-4 group-hover:text-blue-500" />
                 <CardTitle>Multi-Platform Sync</CardTitle>
                 <CardDescription>
                   Seamlessly sync data across devices and integrate with Google Fit and Apple Health.
@@ -156,8 +154,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 px-4 bg-primary/5">
+      <section className="py-20 px-4 bg-primary/20">
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <div>
@@ -180,7 +177,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section */}
       <section id="about" className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center space-y-6">
@@ -204,7 +200,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="border-t py-12 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-4 gap-8">

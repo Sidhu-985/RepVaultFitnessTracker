@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import NutritionCard from "@/components/NutritionCard";
 import { useNutrition } from "@/hooks/useNutrition";
 import Link from "next/link";
-import { Menu,BicepsFlexed,CookingPot } from "lucide-react";
+import { Menu,BicepsFlexed,CookingPot, ClipboardMinus } from "lucide-react";
 
 export default function NutritionPage() {
   return (
@@ -58,7 +58,7 @@ function NutritionContent() {
           <Card className="card-tinted shadow-md">
             <CardContent>
               <div className="text-sm text-color-black font-medium flex flex-row items-center justify-between space-y-0 pb-2">Today's Meals
-                <CookingPot className="inline-block bg-color-brand-orange" />
+                <CookingPot className="inline-block text-orange-500"/>
               </div>
               <div className="text-2xl font-bold">{todayLogs.length}</div>
             </CardContent>
@@ -67,7 +67,7 @@ function NutritionContent() {
           <Card className="card-tinted shadow-md">
             <CardContent>
               <div className="text-sm text-color-black font-medium flex flex-row items-center justify-between space-y-0 pb-2">Calories Today
-                <Menu className="inline-block"/>
+                <ClipboardMinus className="inline-block text-red-500"/>
               </div>
               <div className="text-2xl font-bold">{totalCaloriesToday} kcal</div>
             </CardContent>
@@ -76,7 +76,7 @@ function NutritionContent() {
           <Card className="card-tinted shadow-md">
             <CardContent>
               <div className="text-sm text-color-black font-medium flex flex-row items-center justify-between space-y-0 pb-2">Carbs Today
-                <BicepsFlexed className="inline-block"/>
+                <BicepsFlexed className="inline-block text-blue-600"/>
               </div>
               <div className="text-2xl font-bold">{totalCarbsToday} g</div>
             </CardContent>
