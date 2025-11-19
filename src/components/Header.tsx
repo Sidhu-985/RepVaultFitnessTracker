@@ -32,7 +32,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/90 backdrop-blur-sm shadow-sm ">
-      <div className="container flex h-16 items-center justify-between">
+      <div className="container flex h-16 items-center justify-between mx-5">
         <Link href="/" className="flex items-center gap-2">
           <Dumbbell className="h-6 w-6 text-primary" />
           <span className="text-xl font-bold">RepVault</span>
