@@ -8,8 +8,11 @@ import { Activity, Target, TrendingUp, Bell, Shield, Smartphone, BarChart3, Hear
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { TypewriterEffect } from '@/components/ui/typewriter-effect';
 
 export default function Home() {
+
+  const word = "RepVault";
   
   return (
     <div className="min-h-screen">
@@ -19,9 +22,11 @@ export default function Home() {
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
+              <h1 className="text-5xl md:text-6xl font-bold tracking-tight flex flex-wrap items-center gap-2">
                 Transform Your Fitness Journey with{' '}
-                <span className="text-primary">RepVault</span>
+                <span className='inline-block'>
+                <TypewriterEffect words={[{ text: "RepVault",className: 'text-blue-500 dark:text-blue-500 font-bold normal-case text-5xl md:text-6xl'}]} />
+                </span>
               </h1>
               <p className="text-xl text-muted-foreground">
                 Track workouts, set goals, and monitor your progress with our comprehensive fitness tracking platform.

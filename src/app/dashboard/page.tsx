@@ -55,6 +55,14 @@ function DashboardContent() {
       const snap = await getDocs(q);
       const workouts = snap.docs.map((doc) => doc.data());
 
+      const q2 = query(
+        collection(db,"nutritionLogs"),
+        where("userId","==",user!.uid),
+      );
+
+      const snap2 = await getDocs(q2);
+      const nutritionLogs = snap2.docs.map((doc) => doc.data());  
+
       let steps = 0;
       let calories = 0;
       let hRSum = 0;
@@ -65,6 +73,10 @@ function DashboardContent() {
         steps += workout.steps || 0;
         calories += workout.calories || 0;
         distance += workout.distance || 0;
+
+      nutritionLogs.forEach((nutritionlog) => {
+        calories += nutritionlog.calories || 0;
+      })
 
         if (workout.heartRate) {
           hRSum += workout.heartRate;
@@ -78,18 +90,26 @@ function DashboardContent() {
       setAvgHeartRate(hRCount > 0 ? Math.round(hRSum / hRCount) : 0);
 
       const last7days = Array.from({ length: 7 }, (_, i) => {
-        const date = subDays(new Date(), i);
+  const date = subDays(new Date(), i);
 
-        const todaysWorkouts = workouts.filter((w) =>
-          w.date?.toDate && isSameDay(w.date.toDate(), date)
-        );
+  const todaysWorkouts = workouts.filter((w) =>
+    w.date?.toDate && isSameDay(w.date.toDate(), date)
+  );
 
-        return {
-          day: format(date, "EEE"),
-          steps: todaysWorkouts.reduce((sum, w) => sum + (w.steps || 0), 0),
-          calories: todaysWorkouts.reduce((sum, w) => sum + (w.calories || 0), 0),
-        };
-      }).reverse();
+  const todaysNutritionLogs = nutritionLogs.filter((n) =>
+    n.createdAt?.toDate && isSameDay(n.createdAt.toDate(), date)
+  );
+
+  const WorkoutCalories = todaysWorkouts.reduce((sum, w) => sum + (w.calories || 0), 0);
+  const NutritionCalories = todaysNutritionLogs.reduce((sum, n) => sum + (n.calories || 0), 0);
+
+  return {
+    day: format(date, "EEE"),
+    steps: todaysWorkouts.reduce((sum, w) => sum + (w.steps || 0), 0),
+    calories: WorkoutCalories + NutritionCalories, // ✔️ combined calories
+  };
+}).reverse();
+
 
       setWeeklyData(last7days);
     }catch (err) {

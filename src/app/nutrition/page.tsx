@@ -22,7 +22,7 @@ export default function NutritionPage() {
 
 function NutritionContent() {
   const { user, userData } = useAuth();
-  const { logs, loading, error, todayLogs, totalCaloriesToday, totalCarbsToday, deleteLog } = useNutrition(user?.uid ?? null);
+  const { logs, loading, error, todayLogs, totalCaloriesToday, totalCarbsToday, deleteLog } = useNutrition(user?.uid);
   const [activeTab, setActiveTab] = useState<"today" | "history">("today");
 
   const handleDelete = async (id: string) => {
@@ -35,6 +35,16 @@ function NutritionContent() {
     }
   };
 
+  if (loading){
+    return (
+      <div className="min-h-screen">
+        <Header />
+        <div className="flex flex-1 items-center justify-center py-20">
+          <div className="h-32 w-32 animate-spin rounded-full border-b-2 border-t-2 border-primary"></div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-app-gradient">
       <Header />
@@ -69,7 +79,7 @@ function NutritionContent() {
               <div className="text-sm text-color-black font-medium flex flex-row items-center justify-between space-y-0 pb-2">Calories Today
                 <ClipboardMinus className="inline-block text-red-500"/>
               </div>
-              <div className="text-2xl font-bold">{totalCaloriesToday} kcal</div>
+              <div className="text-2xl font-bold">{totalCaloriesToday} cal</div>
             </CardContent>
           </Card>
 
