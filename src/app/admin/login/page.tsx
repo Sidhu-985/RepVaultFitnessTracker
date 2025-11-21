@@ -91,6 +91,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className='border-black-100'
               />
             </div>
             <div>
@@ -101,6 +102,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className='border-black-100'
               />
             </div>
             <Button type="submit" className="w-full" disabled={submitting}>
@@ -109,7 +111,7 @@ export default function AdminLoginPage() {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-muted-foreground">
+            {/* <p className="text-sm text-muted-foreground">
               {isLogin ? "Don't have an account?" : 'Already have an account?'}{' '}
               <button
                 onClick={() => {
@@ -122,7 +124,7 @@ export default function AdminLoginPage() {
               >
                 {isLogin ? 'Sign up' : 'Sign in'}
               </button>
-            </p>
+            </p> */}
           </div>
 
           <div className="mt-4 text-center">

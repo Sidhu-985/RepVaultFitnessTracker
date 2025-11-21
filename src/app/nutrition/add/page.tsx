@@ -50,12 +50,17 @@ function AddNutritionContent() {
 
     setLoading(true);
     try {
-      await addLog({
+      const res = await addLog({
         userId: user.uid,
         foodItem: food.trim(),
         calories: cal,
         carbs: carb,
       });
+
+      if (!res.success && res.reason === "duplicate"){
+        toast.error("This food entry already exists");
+        return;
+      }
       toast.success(`${food} logged`);
       router.push("/nutrition");
     } catch (err) {
@@ -76,13 +81,13 @@ function AddNutritionContent() {
     <div className="min-h-screen bg-app-gradient">
       <Header />
       <main className="container mx-auto p-6 max-w-2xl">
-        <Card>
+        <Card className="card-tinted shadow-xl">
           <CardHeader>
             <CardTitle>Log Your Meal</CardTitle>
             <CardDescription>Track your nutrition intake for better insights</CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={submit} className="space-y-4">
+            <form className="space-y-4">
               <div className="space-y-2">
                 <Label>Food Item</Label>
                 <Input value={food} onChange={(e) => setFood(e.target.value)} placeholder="e.g., Grilled Chicken Breast" className="border-color-black"/>
@@ -118,7 +123,7 @@ function AddNutritionContent() {
 
               <div className="flex gap-2">
                 <Button onClick={submit} disabled={loading}>{loading ? "Logging..." : "Log Food"}</Button>
-                <Button variant="outline" onClick={() => router.push("/nutrition")}>Cancel</Button>
+                <Button type="button" variant="outline" onClick={() => router.push("/nutrition")}>Cancel</Button>
               </div>
             </form>
           </CardContent>

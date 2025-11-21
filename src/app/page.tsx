@@ -15,7 +15,7 @@ export default function Home() {
     <div className="min-h-screen">
       <Header />
       
-      <section className="relative py-20 px-4 bg-blue-100 from-primary/10 via-background to-primary/5">
+      <section className="relative py-20 px-4 bg-blue-200 from-primary/10 via-background to-primary/5">
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
@@ -121,9 +121,9 @@ export default function Home() {
               </CardHeader>
             </Card>
 
-            <Card className='group hover:shadow-[0_0_20px_5px_rgba(255,255,0,0.8)] transition-shadow'>
+            <Card className='group hover:shadow-[0_0_25px_15px_rgba(255,192,203,1)] transition-shadow'>
               <CardHeader>
-                <Heart className="h-12 w-12 text-primary mb-4 group-hover:text-yellow-500" />
+                <Heart className="h-12 w-12 text-primary mb-4 group-hover:text-pink-500" />
                 <CardTitle>Health Metrics</CardTitle>
                 <CardDescription>
                   Track heart rate, calories, and other vital health metrics to optimize your workouts.
@@ -200,7 +200,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="border-t py-12 px-4">
+      <footer className="border-t py-12 px-4 bg-blue-100/95">
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-4 gap-8">
             <div>

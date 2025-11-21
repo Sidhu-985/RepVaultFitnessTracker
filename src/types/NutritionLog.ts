@@ -1,8 +1,7 @@
-// src/types/NutritionLog.ts
 import { Timestamp } from "firebase/firestore";
 
 export interface NutritionLog {
-  id: string; // firestore doc id
+  id: string; 
   userId: string;
   foodItem: string;
   calories: number;

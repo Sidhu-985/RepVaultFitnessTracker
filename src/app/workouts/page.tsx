@@ -288,7 +288,7 @@ function WorkoutsContent() {
             <CardDescription>
               {recommendedPlans.length > 0
                 ? "Personalized plans based on your fitness type"
-                : "No predefined workouts found yet — check Firestore collection `predefinedWorkouts`."}
+                : "No predefined workouts found yet"}
             </CardDescription>
           </CardHeader>
           <CardContent>

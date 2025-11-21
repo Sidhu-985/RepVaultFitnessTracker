@@ -24,6 +24,16 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
 
+    if (email=='admin123@gmail.com' && password=='admin123'){
+      toast({
+        title: "Error",
+        description: "Use Admin Login Page to login as Admin.",
+        variant: "destructive",
+      });
+      setLoading(false);
+      return;
+    }
+
     try {
       await signIn(email, password);
       toast({
@@ -44,6 +54,7 @@ export default function LoginPage() {
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
+
     try {
       await signInWithGoogle();
       toast({
@@ -90,7 +101,7 @@ export default function LoginPage() {
                   placeholder="your.email@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 border-black-100"
                   required
                 />
               </div>
@@ -105,7 +116,7 @@ export default function LoginPage() {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 border-black-100"
                   required
                 />
               </div>

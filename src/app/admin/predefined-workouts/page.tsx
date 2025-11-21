@@ -90,7 +90,7 @@ export default function PredefinedWorkoutsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-app-gradient">
       <Headeradmin />
       <div className="container my-8 mx-20">
         <div className="flex justify-between items-center mb-8">
@@ -127,7 +127,7 @@ export default function PredefinedWorkoutsPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {workouts.map((workout) => (
-              <Card key={workout.id} className="flex flex-col overflow-hidden hover:shadow-lg transition-shadow">
+              <Card key={workout.id} className="flex flex-col overflow-hidden hover:shadow-lg transition-shadow card-tinted">
                 <CardHeader className="pb-3">
                   <div className="flex justify-between items-start gap-2">
                     <div className="flex-1">

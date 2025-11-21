@@ -161,7 +161,7 @@ export default function RegisterPage() {
                   placeholder="John Doe"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 border-black-100"
                   required
                 />
               </div>
@@ -178,7 +178,7 @@ export default function RegisterPage() {
                   placeholder="your.email@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 border-black-100"
                   required
                 />
               </div>
@@ -195,7 +195,7 @@ export default function RegisterPage() {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 border-black-100"
                   required
                 />
               </div>
@@ -212,7 +212,7 @@ export default function RegisterPage() {
                   placeholder="••••••••"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 border-black-100"
                   required
                 />
               </div>
@@ -226,7 +226,7 @@ export default function RegisterPage() {
                 onValueChange={setClientType}
                 required
               >
-                <SelectTrigger id="clientType">
+                <SelectTrigger id="clientType" className="border-black-100">
                   <SelectValue placeholder="Select your fitness focus" />
                 </SelectTrigger>
                 <SelectContent>
@@ -244,7 +244,7 @@ export default function RegisterPage() {
               <div className="space-y-2">
                 <Label htmlFor="gender">Gender</Label>
                 <Select value={gender} onValueChange={setGender}>
-                  <SelectTrigger id="gender">
+                  <SelectTrigger id="gender" className="border-black-100">
                     <SelectValue placeholder="Select gender" />
                   </SelectTrigger>
                   <SelectContent>
@@ -265,7 +265,7 @@ export default function RegisterPage() {
                     placeholder="20"
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 border-black-100"
                     min="10"
                     max="100"
                   />
@@ -284,7 +284,7 @@ export default function RegisterPage() {
                     placeholder="170"
                     value={height}
                     onChange={(e) => setHeight(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 border-black-100"
                   />
                 </div>
               </div>
@@ -299,7 +299,7 @@ export default function RegisterPage() {
                     placeholder="65"
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 border-black-100"
                   />
                 </div>
               </div>

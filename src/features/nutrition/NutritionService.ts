@@ -33,13 +33,35 @@ export class NutritionService {
   }
 
   async addNutritionLog(log: Omit<NutritionLog, "id" | "createdAt" | "updatedAt">) {
-    const payload = {
-      ...log,
-      createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now(),
-    };
-    const ref = await addDoc(collection(db, "nutritionLogs"), payload);
-    return ref.id;
+   const payload = {
+    ...log,
+    createdAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+  };
+
+  const q = query(
+    collection(db, "nutritionLogs"),
+    where("userId", "==", log.userId),
+    where("foodItem", "==", log.foodItem)
+  );
+
+  const snap = await getDocs(q);
+
+  const isDuplicate = snap.docs.some(doc => {
+    const data = doc.data();
+    return (
+      data.calories === log.calories &&
+      data.carbs === log.carbs
+    );
+  });
+
+  if (isDuplicate) {
+    return { success: false, reason: "duplicate" };
+  }
+
+  const ref = await addDoc(collection(db, "nutritionLogs"), payload);
+
+  return { success: true, id: ref.id };
   }
 
   async deleteNutritionLog(logId: string) {
