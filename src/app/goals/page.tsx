@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Plus, Target, TrendingUp, Calendar, Trash2, Bell } from 'lucide-react';
 import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, orderBy, deleteDoc, doc,Timestamp } from 'firebase/firestore';
+import { collection, query, where, getDocs, orderBy, deleteDoc, doc,Timestamp, updateDoc } from 'firebase/firestore';
 import { Goal } from '@/types';
 import { format } from 'date-fns';
 import Link from 'next/link';
@@ -63,10 +63,48 @@ function GoalsContent() {
         id: doc.id, 
         ...doc.data() 
       })) as Goal[];
+
       
-      setGoals(goalsData);
-      setActiveGoals(goalsData.filter(g => !g.isCompleted));
-      setCompletedGoals(goalsData.filter(g => g.isCompleted));
+      const nutritionQuery = query(
+        collection(db , "nutritionLogs"),
+        where('userId', '==', user.uid),
+      );
+
+      const nutritionSnapshot = await getDocs(nutritionQuery);
+      const nutritionData = nutritionSnapshot.docs.map(doc =>
+        doc.data()
+      );
+
+      const workoutQuery = query(
+        collection(db, "workouts"),
+        where('userId','==',user.uid)
+      );
+
+      const workoutSnapshot = await getDocs(workoutQuery);
+      const workoutData = workoutSnapshot.docs.map(doc => doc.data());
+
+      const updatedGoals = goalsData.map(goal => {
+        let current = 0;
+
+        if (goal.type === "calories"){
+          current = nutritionData.reduce((sum,n) => sum + (n.calories || 0) , 0);
+        }
+
+        else if(goal.type === "workouts"){
+          current = workoutData.length;
+        }
+
+        if (current >= goal.targetValue){
+          goal.isCompleted = true;
+        }
+
+        return {...goal, currentValue:current};
+      })
+      
+      setGoals(updatedGoals);
+      setActiveGoals(updatedGoals.filter(g => !g.isCompleted));
+      setCompletedGoals(updatedGoals.filter(g => g.isCompleted));
+
     } catch (error) {
       console.error('Error fetching goals:', error);
       toast.error('Failed to load goals');
