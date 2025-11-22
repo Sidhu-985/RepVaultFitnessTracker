@@ -55,14 +55,6 @@ function DashboardContent() {
       const snap = await getDocs(q);
       const workouts = snap.docs.map((doc) => doc.data());
 
-      const q2 = query(
-        collection(db,"nutritionLogs"),
-        where("userId","==",user!.uid),
-      );
-
-      const snap2 = await getDocs(q2);
-      const nutritionLogs = snap2.docs.map((doc) => doc.data());  
-
       let steps = 0;
       let calories = 0;
       let hRSum = 0;
@@ -73,10 +65,6 @@ function DashboardContent() {
         steps += workout.steps || 0;
         calories += workout.calories || 0;
         distance += workout.distance || 0;
-
-      nutritionLogs.forEach((nutritionlog) => {
-        calories += nutritionlog.calories || 0;
-      })
 
         if (workout.heartRate) {
           hRSum += workout.heartRate;
@@ -90,26 +78,18 @@ function DashboardContent() {
       setAvgHeartRate(hRCount > 0 ? Math.round(hRSum / hRCount) : 0);
 
       const last7days = Array.from({ length: 7 }, (_, i) => {
-  const date = subDays(new Date(), i);
+        const date = subDays(new Date(), i);
 
-  const todaysWorkouts = workouts.filter((w) =>
-    w.date?.toDate && isSameDay(w.date.toDate(), date)
-  );
+        const todaysWorkouts = workouts.filter((w) =>
+          w.date?.toDate && isSameDay(w.date.toDate(), date)
+        );
 
-  const todaysNutritionLogs = nutritionLogs.filter((n) =>
-    n.createdAt?.toDate && isSameDay(n.createdAt.toDate(), date)
-  );
-
-  const WorkoutCalories = todaysWorkouts.reduce((sum, w) => sum + (w.calories || 0), 0);
-  const NutritionCalories = todaysNutritionLogs.reduce((sum, n) => sum + (n.calories || 0), 0);
-
-  return {
-    day: format(date, "EEE"),
-    steps: todaysWorkouts.reduce((sum, w) => sum + (w.steps || 0), 0),
-    calories: WorkoutCalories + NutritionCalories, // ✔️ combined calories
-  };
-}).reverse();
-
+        return {
+          day: format(date, "EEE"),
+          steps: todaysWorkouts.reduce((sum, w) => sum + (w.steps || 0), 0),
+          calories: todaysWorkouts.reduce((sum, w) => sum + (w.calories || 0), 0),
+        };
+      }).reverse();
 
       setWeeklyData(last7days);
     }catch (err) {
@@ -189,7 +169,6 @@ function DashboardContent() {
           </div>
         </div>
 
-        {/* Activity Summary Cards */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <ActivityCard title="Steps" icon={<Activity className="text-brand-green"/>} value={todayActivity.steps} target={10000} unit="steps" />
           <ActivityCard title="Calories" icon={<Flame className="text-brand-yellow"/>} value={todayActivity.calories} target={500} unit="kcal" />
@@ -197,7 +176,6 @@ function DashboardContent() {
           <ActivityCard title="Distance" icon={<TrendingUp className="text-brand-blue"/>} value={todayActivity.distance} unit="km" />
         </div>
 
-        {/* Weekly Progress Chart */}
         <Card className="w-full card-tinted shadow-md">
           <CardHeader>
             <CardTitle>Weekly Progress</CardTitle>
@@ -225,10 +203,8 @@ function DashboardContent() {
           </CardContent>
         </Card>
 
-        {/* Recommended Workouts Section */}
         <RecommendedWorkouts clientType={userData?.clientType} />
 
-        {/* Goals and Workouts */}
         <div className="grid gap-6 md:grid-cols-2">
           <GoalSection goals={goals} />
           <RecentWorkoutsSection workouts={recentWorkouts} />
@@ -238,7 +214,6 @@ function DashboardContent() {
   );
 }
 
-/* -------------------------- Subcomponents -------------------------- */
 
 function ActivityCard({ title, icon, value, target, unit }: any) {
   return (
@@ -350,7 +325,6 @@ function RecentWorkoutsSection({ workouts }: { workouts: Workout[] }) {
   );
 }
 
-/* -------------------------- NEW: Recommended Workouts -------------------------- */
 
 function RecommendedWorkouts({ clientType }: { clientType?: string }) {
   const [templates, setTemplates] = useState<any[]>([]);
