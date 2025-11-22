@@ -144,7 +144,6 @@ function NewGoalContent() {
       toast.success("🎯 Goal created and linked successfully!");
       router.push("/goals");
     } catch (error) {
-      console.error("Error creating goal:", error);
       toast.error("Failed to create goal");
     } finally {
       setLoading(false);
@@ -225,7 +224,7 @@ function NewGoalContent() {
                     required
                   >
                     <SelectTrigger className="border-color-black">
-                      <SelectValue placeholder="Select period" className="border-color-black"/>
+                      <SelectValue placeholder="Select period" className="border-color-black" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="daily">Daily</SelectItem>

@@ -83,6 +83,14 @@ function GoalsContent() {
       const workoutSnapshot = await getDocs(workoutQuery);
       const workoutData = workoutSnapshot.docs.map(doc => doc.data());
 
+      const userQuery = query(
+        collection(db, "users"),
+        where('userId','==',user.uid),
+      );
+
+      const userSnapshot = await getDocs(userQuery);
+      const userData = userSnapshot.docs.map(doc => doc.data());
+
       const updatedGoals = goalsData.map(goal => {
         let current = 0;
 
@@ -92,6 +100,10 @@ function GoalsContent() {
 
         else if(goal.type === "workouts"){
           current = workoutData.length;
+        }
+
+        else if(goal.type === "weight"){
+          
         }
 
         if (current >= goal.targetValue){
