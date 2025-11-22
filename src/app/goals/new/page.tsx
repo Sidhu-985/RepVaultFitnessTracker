@@ -118,7 +118,6 @@ function NewGoalContent() {
     setLoading(true);
 
     try {
-      // ✅ 1. Add goal to Firestore (goals collection)
       const goalRef = await addDoc(collection(db, "goals"), {
         userId: user.uid,
         title: formData.title,
@@ -136,7 +135,6 @@ function NewGoalContent() {
         updatedAt: Timestamp.now(),
       });
 
-      // ✅ 2. Link goal to the user’s document
       const userRef = doc(db, "users", user.uid);
       await updateDoc(userRef, {
         goalIds: arrayUnion(goalRef.id),
@@ -152,6 +150,13 @@ function NewGoalContent() {
       setLoading(false);
     }
   };
+
+  const checkGoalType = (goalT : string) => {
+    if (goalT === 'calories' || goalT === 'steps' || goalT === 'workouts' || goalT === 'weights'){
+      return true;
+    }
+    return false;
+  }
 
   return (
     <div className="min-h-screen bg-app-gradient">
@@ -199,7 +204,7 @@ function NewGoalContent() {
                     onValueChange={handleTypeChange}
                     required
                   >
-                    <SelectTrigger className="border-color-black">
+                    <SelectTrigger className="border-color-black" aria-required>
                       <SelectValue placeholder="Select goal type" className="border-color-black"/>
                     </SelectTrigger>
                     <SelectContent>
@@ -250,6 +255,7 @@ function NewGoalContent() {
 
                 <div className="space-y-2">
                   <Label htmlFor="unit">Unit</Label>
+                  { checkGoalType(formData.type) ?
                   <Input
                     id="unit"
                     placeholder="steps"
@@ -259,7 +265,19 @@ function NewGoalContent() {
                     }
                     required
                     className="border-color-black "
+                    disabled
                   />
+                  : 
+                  <Input 
+                  id="custom_id"
+                  value={formData.unit}
+                  onChange={(e) => 
+                    setFormData({ ...formData,unit: e.target.value})
+                  }
+                  required
+                  className="border-color-black"
+                  />
+                  }
                 </div>
               </div>
 

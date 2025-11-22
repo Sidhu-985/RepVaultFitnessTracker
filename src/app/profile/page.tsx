@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Header } from '@/components/Header';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { useAuth } from '@/contexts/AuthContext';
@@ -14,8 +14,9 @@ import { format } from 'date-fns';
 import { toast } from 'sonner';
 import { Toaster } from '@/components/ui/sonner';
 import { SelectItem,Select,SelectContent,SelectTrigger,SelectValue } from '@/components/ui/select';
-import { doc, updateDoc } from "firebase/firestore";
+import { collection, doc, updateDoc,where,query,getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { cp } from 'fs';
 
 
 export default function ProfilePage() {
@@ -37,6 +38,39 @@ function ProfileContent() {
     height: userData?.height || '',
     weight: userData?.weight || '',
   });
+  const [workouts, setworkouts] = useState<any[]>([]);
+  const [goals, setgoals] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchWorkouts = async () => {
+    const workout = query(
+      collection(db, "workouts"),
+      where('userId','==',user?.uid),
+    );
+
+    const workoutSnapshot = await getDocs(workout);
+    const workoutData = workoutSnapshot.docs.map(doc => doc.data());
+
+    setworkouts(workoutData);
+  }
+
+  fetchWorkouts();
+
+  const fetch_activeGoals = async () => {
+    const goals = query(
+      collection(db, "goals"),
+      where('userId','==',user?.uid),
+    );
+
+    const goalsSnapshot = await getDocs(goals);
+    const goalsData = goalsSnapshot.docs.map(doc => doc.data());
+
+    setgoals(goalsData);
+  };
+
+  fetch_activeGoals();
+
+  },[user]);
 
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
@@ -45,7 +79,6 @@ function ProfileContent() {
   try {
     if (!user) return;
 
-    // Update Firestore user document
     const userRef = doc(db, "users", user.uid);
 
     await updateDoc(userRef, {
@@ -124,7 +157,6 @@ function ProfileContent() {
             </CardContent>
           </Card>
 
-          {/* Edit Profile Card */}
           <Card>
             <CardHeader>
               <CardTitle>Edit Profile</CardTitle>
@@ -224,11 +256,11 @@ function ProfileContent() {
             <CardContent>
               <div className="grid md:grid-cols-3 gap-4">
                 <div className="text-center p-4 bg-primary/5 rounded-lg">
-                  <p className="text-2xl font-bold text-primary">0</p>
+                  <p className="text-2xl font-bold text-primary">{workouts.length}</p>
                   <p className="text-sm text-muted-foreground">Total Workouts</p>
                 </div>
                 <div className="text-center p-4 bg-primary/5 rounded-lg">
-                  <p className="text-2xl font-bold text-primary">0</p>
+                  <p className="text-2xl font-bold text-primary">{goals.length}</p>
                   <p className="text-sm text-muted-foreground">Active Goals</p>
                 </div>
                 <div className="text-center p-4 bg-primary/5 rounded-lg">
