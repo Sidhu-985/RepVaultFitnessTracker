@@ -276,7 +276,7 @@ export default function AdminPage() {
 
         {/* Action Buttons */}
         <div className="flex gap-2 mb-6 flex-wrap">
-          <Button onClick={handleSeedWorkouts} className="bg-green-600 hover:bg-green-700">Seed Workouts</Button>
+          {/* <Button onClick={handleSeedWorkouts} className="bg-green-600 hover:bg-green-700">Seed Workouts</Button> */}
           <Button variant="destructive" onClick={handleClearPredefined}>Clear Predefined</Button>
           <Button variant="outline" onClick={() => router.push('/admin/predefined-workouts')}>Manage Workouts</Button>
         </div>

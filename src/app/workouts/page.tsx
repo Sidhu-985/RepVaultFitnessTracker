@@ -79,32 +79,27 @@ function WorkoutsContent() {
       const data = docSnap.data();
       let updated = false;
 
-      // 1️⃣ If date is missing → auto-fix
       if (!data.date) {
         data.date = Timestamp.now();
         updated = true;
       }
 
-      // 2️⃣ If date is a string → convert to Timestamp
       if (typeof data.date === "string") {
         const parsed = new Date(data.date);
         if (!isNaN(parsed.getTime())) {
           data.date = Timestamp.fromDate(parsed);
           updated = true;
         } else {
-          // fallback
           data.date = Timestamp.now();
           updated = true;
         }
       }
 
-      // 3️⃣ If date is a JS Date object → convert to Timestamp
       if (data.date instanceof Date) {
         data.date = Timestamp.fromDate(data.date);
         updated = true;
       }
 
-      // 4️⃣ Persist fixes back to Firestore
       if (updated) {
         await updateDoc(doc(db, "workouts", docSnap.id), {
           date: data.date,
@@ -117,7 +112,6 @@ function WorkoutsContent() {
       } as Workout);
     }
 
-    // 5️⃣ Sort safely in frontend (no Firestore ordering needed)
     cleanedWorkouts.sort((a, b) => {
       const dateA = a.date?.toDate ? a.date.toDate() : new Date();
       const dateB = b.date?.toDate ? b.date.toDate() : new Date();
@@ -135,7 +129,6 @@ function WorkoutsContent() {
 };
 
 
-  // ✅ Fetch predefined workout templates (with full debug + fallback UI)
   const fetchRecommendedPlans = async () => {
     if (!userData?.clientType) {
       console.warn("⚠️ No userData.clientType found, skipping plan fetch");
@@ -175,7 +168,6 @@ function WorkoutsContent() {
     }
   };
 
-  // ✅ Add predefined workout to user's workouts
   const handleStartPlan = async (plan: any) => {
     if (!user) return;
     try {
@@ -194,11 +186,11 @@ function WorkoutsContent() {
 
       const newWorkout = {
         userId: user.uid,
-        planTemplateId: plan.id,             // 🔥 Save the plan reference
+        planTemplateId: plan.id,             
         name: plan.name,
         type: plan.targetClientType,
         intensity: plan.difficulty?.toLowerCase() || "moderate",
-        exercises: plan.exercises || [],      // 🔥 SAVE EXERCISES
+        exercises: plan.exercises || [],     
         duration: (plan.exercises?.length || 0) * 10,
         calories: (plan.exercises?.length || 0) * 50,
         date: new Date(),
@@ -208,7 +200,6 @@ function WorkoutsContent() {
 
       const workoutRef = await addDoc(collection(db, "workouts"), newWorkout);
 
-      // Optional: store active plan
       // const userRef = doc(db, "users", user.uid);
       // await updateDoc(userRef, {
       //   activeWorkoutTemplateId: plan.id,
@@ -247,7 +238,6 @@ function WorkoutsContent() {
     );
   }
 
-  // Stats
   const totalWorkouts = workouts.length;
   const totalDuration = workouts.reduce((sum, w) => sum + w.duration, 0);
   const totalCalories = workouts.reduce((sum, w) => sum + w.calories, 0);
@@ -259,7 +249,6 @@ function WorkoutsContent() {
       <Toaster />
 
       <main className="container mx-auto p-6 space-y-6">
-        {/* Header */}
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold">Workouts</h1>
@@ -273,15 +262,13 @@ function WorkoutsContent() {
           </Button>
         </div>
 
-        {/* Stats */}
         <div className="grid gap-4 md:grid-cols-4">
           <StatCard title="Total Workouts" icon={<TrendingUp className="text-brand-blue"/>} value={totalWorkouts} />
           <StatCard title="Total Duration" icon={<Clock className="text-brand-yellow"/>} value={`${totalDuration} min`} />
-          <StatCard title="Total Calories" icon={<Flame className="text-brand-red"/>} value={`${totalCalories} cal`} />
+          <StatCard title="Total Calories" icon={<Flame className="text-brand-red"/>} value={`${totalCalories} kcal`} />
           <StatCard title="Avg Duration" icon={<Clock className="text-brand-yellow"/>} value={`${avgDuration} min`} />
         </div>
 
-        {/* ✅ Recommended Plans Section */}
         <Card className="card-tinted shadow-md">
           <CardHeader>
             <CardTitle>Recommended Workout Plans</CardTitle>
@@ -322,7 +309,6 @@ function WorkoutsContent() {
           </CardContent>
         </Card>
 
-        {/* Workout History */}
         <Card className="card-tinted shadow-xl">
           <CardHeader>
             <CardTitle>Workout History</CardTitle>
@@ -345,7 +331,6 @@ function WorkoutsContent() {
   );
 }
 
-/* ----------------- Subcomponents ----------------- */
 
 function StatCard({ title, icon, value }: any) {
   return (
@@ -411,7 +396,7 @@ function WorkoutList({ workouts, getIntensityColor, handleDeleteWorkout }: any) 
               </span>
               <span className="flex items-center gap-1">
                 <Flame className="h-4 w-4" />
-                {workout.calories} cal
+                {workout.calories} kcal
               </span>
             </div>
             {workout.notes && (

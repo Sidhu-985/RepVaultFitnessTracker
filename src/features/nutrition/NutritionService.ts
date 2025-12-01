@@ -1,4 +1,3 @@
-// src/features/nutrition/NutritionService.ts
 import { db } from "@/lib/firebase";
 import {
   collection,

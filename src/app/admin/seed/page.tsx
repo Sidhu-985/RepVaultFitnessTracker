@@ -144,7 +144,7 @@
 //         await addDoc(collection(db, "predefinedWorkouts"), template);
 //       }
 
-//       console.log("✅ Predefined workouts seeded successfully!");
+//       console.log(" Predefined workouts seeded successfully!");
 //     };
 
 //     seedWorkouts();

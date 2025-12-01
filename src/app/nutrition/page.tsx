@@ -79,7 +79,7 @@ function NutritionContent() {
               <div className="text-sm text-color-black font-medium flex flex-row items-center justify-between space-y-0 pb-2">Calories Today
                 <ClipboardMinus className="inline-block text-red-500"/>
               </div>
-              <div className="text-2xl font-bold">{totalCaloriesToday} cal</div>
+              <div className="text-2xl font-bold">{totalCaloriesToday} kcal</div>
             </CardContent>
           </Card>
 

@@ -108,7 +108,7 @@ export default function WorkoutDetailPage() {
             </div>
 
             <div className="flex items-center gap-2">
-              <Flame size={18} /> Calories: {workout.calories} cal
+              <Flame size={18} /> Calories: {workout.calories} kcal
             </div>
 
             {workout.isCompleted ? (
@@ -139,7 +139,7 @@ export default function WorkoutDetailPage() {
                     {ex.sets && ex.reps ? (
                       <p>{ex.sets} × {ex.reps}</p>
                     ) : (
-                      <p>{ex.duration} sec</p>
+                      <p>{ex.duration}</p>
                     )}
                   </li>
                 ))}

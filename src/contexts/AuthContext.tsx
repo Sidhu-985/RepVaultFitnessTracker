@@ -39,7 +39,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(firebaseUser);
       
       if (firebaseUser) {
-        // Fetch user data from Firestore
         const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
         if (userDoc.exists()) {
           setUserData(userDoc.data() as User);
@@ -77,12 +76,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     id: user.uid,
     email: user.email!,
     displayName,
-    clientType,      // 🔥 required for predefined workouts
+    clientType,      
     age: age ?? null,
     gender: gender ?? null,
     height: height ?? null,
     weight: weight ?? null,
-    goalIds: [],     // 🔥 safe for goals
+    goalIds: [],     
     activeWorkoutTemplateId: null,
     createdAt: Timestamp.now(),
     updatedAt: Timestamp.now(),
@@ -99,11 +98,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const provider = new GoogleAuthProvider();
     const userCredential = await signInWithPopup(auth, provider);
     
-    // Check if user document exists
     const userDoc = await getDoc(doc(db, 'users', userCredential.user.uid));
     
     if (!userDoc.exists()) {
-      // Create user document
       const newUser: User = {
         id: userCredential.user.uid,
         email: userCredential.user.email!,

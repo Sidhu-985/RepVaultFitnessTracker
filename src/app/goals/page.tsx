@@ -91,15 +91,16 @@ function GoalsContent() {
       const userSnapshot = await getDocs(userQuery);
       const userData = userSnapshot.docs.map(doc => doc.data());
 
-      const updatedGoals = goalsData.map(goal => {
+      const updatedGoals = await Promise.all(
+        goalsData.map(async (goal) => {
         let current = 0;
 
         if (goal.type === "calories"){
           current = nutritionData.reduce((sum,n) => sum + (n.calories || 0) , 0);
         }
 
-        else if(goal.type === "workouts"){
-          current = workoutData.length;
+        else if(goal.type === "workouts" ){
+          current = workoutData.filter(w => w.isCompleted === true).length;
         }
 
         else if(goal.type === "weight"){
@@ -110,8 +111,12 @@ function GoalsContent() {
           goal.isCompleted = true;
         }
 
+        const goalRef = doc(db, "goals", goal.id);
+        await updateDoc(goalRef, {currentValue :current});
+
         return {...goal, currentValue:current};
       })
+    );
       
       setGoals(updatedGoals);
       setActiveGoals(updatedGoals.filter(g => !g.isCompleted));
@@ -177,7 +182,6 @@ function GoalsContent() {
     );
   }
 
-  // Calculate stats
   const totalGoals = goals.length;
   const completedCount = completedGoals.length;
   const activeCount = activeGoals.length;
