@@ -63,6 +63,12 @@ service cloud.firestore {
       allow write: if request.auth != null && request.auth.uid == userId;
     }
     
+    // Admin collection
+    match /admin/{adminId} {
+      allow read: if request.auth != null && request.auth.uid == adminId;
+      allow write: if request.auth != null && request.auth.uid == adminId;
+    }
+    
     // Workouts collection
     match /workouts/{workoutId} {
       allow read, write: if request.auth != null && resource.data.userId == request.auth.uid;
